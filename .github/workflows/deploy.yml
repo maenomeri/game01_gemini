@@ -27,20 +27,16 @@ jobs:
 
       - name: Deploy
         env:
-          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+          # SSH_DEPLOY_KEY という名前の Secret に PAT が入っているとのことなのでそのまま使用します
+          GH_TOKEN: ${{ secrets.SSH_DEPLOY_KEY }}
         run: |
-          mkdir -p ~/.ssh
-          echo "$SSH_DEPLOY_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          # クローンURLをHTTPS形式に変更し、トークンを埋め込む
+          git clone https://x-access-token:${GH_TOKEN}@github.com/maenomeri/game01_gemini_dist.git dest_repo
           
-          # Clone the destination repo
-          git clone git@github.com:maenomeri/game01_gemini_dist.git dest_repo
-          
-          # Remove existing files except .git
+          # .git 以外の既存ファイルを削除
           find dest_repo -maxdepth 1 ! -name .git ! -name . -exec rm -rf {} +
           
-          # Copy new files
+          # ビルド成果物と追加ファイルをコピー
           cp -r dist/* dest_repo/
           cp tanaru.json dest_repo/
           cp thumbnail.png dest_repo/
@@ -49,9 +45,12 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add .
-          # Only commit if there are changes
+          
+          # 変更がある場合のみコミットしてプッシュ
           if [ -n "$(git status --porcelain)" ]; then
             git commit -m "Deploy: ${{ github.sha }}"
+            # リモートURLを再設定してトークン認証を確実にする
+            git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/maenomeri/game01_gemini_dist.git
             git push origin main
           else
             echo "No changes to commit"
