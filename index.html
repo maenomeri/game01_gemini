@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEON GRAVITY | Gravitational Pulse Puzzle</title>
+  <meta name="description"
+    content="A mind-bending gravitational puzzle game. Guide the orb using pulses through treacherous neon corridors.">
+</head>
+
+<body>
+  <div id="app">
+    <canvas id="gameCanvas"></canvas>
+
+    <div class="overlay">
+      <div class="top-bar">
+        <div class="stats">
+          <div class="stat-item">
+            <div class="stat-label">Energy</div>
+            <div id="energyVal" class="stat-value">100</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Pulses</div>
+            <div id="pulseCount" class="stat-value">0</div>
+          </div>
+        </div>
+        <div class="level-info">
+          <div id="levelName" class="level-title">Sector 01</div>
+          <div id="bestPulses" class="stat-label" style="text-align: right;">Best: --</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Start Screen -->
+    <div id="startScreen" class="screen active">
+      <h1>NEON GRAVITY</h1>
+      <p id="instructions">
+        Control the flow of gravity.<br>
+        Click to create a <b>Gravity Well</b> that pulls the core.<br>
+        Reach the <b>Sync Port</b> to advance.<br>
+        Watch your energy levels.
+      </p>
+      <button id="startBtn" class="btn">Initiate Engine</button>
+    </div>
+
+    <!-- Win Screen -->
+    <div id="winScreen" class="screen">
+      <h1 class="win-header">SUCCESS</h1>
+      <div>
+        <p class="stat-label">Sectors Cleared</p>
+        <div id="finalScore" class="stat-value">0</div>
+      </div>
+      <button id="nextBtn" class="btn">Next Sector</button>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="overScreen" class="screen">
+      <h1 class="over-header">CRITICAL FAILURE</h1>
+      <p id="overReason">Energy Depleted</p>
+      <button id="retryBtn" class="btn btn-secondary">System Reboot</button>
+    </div>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>
