@@ -1,0 +1,12 @@
+{
+    "version": "1.0.0",
+    "name": "NEON GRAVITY",
+    "description": "A mind-bending gravitational puzzle game. Guide the orb using pulses through treacherous neon corridors.",
+    "tools": [
+        "Gemini",
+        "Antigravity"
+    ],
+    "tags": [
+        "ゲーム"
+    ]
+}
